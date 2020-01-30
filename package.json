@@ -1,0 +1,17 @@
+{
+    "name": "node-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "export NODE_ENV='development' && nodemon app.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "mysql": "^2.18.1",
+        "nodemon": "^2.0.2"
+    }
+}
