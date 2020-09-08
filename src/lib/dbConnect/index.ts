@@ -1,5 +1,5 @@
 import mysql from 'mysql'
-import { dbConfig } from '@/config'
+import { dbConfig } from './../../config'
 
 // 创建连接池
 const pool = mysql.createPool(dbConfig)

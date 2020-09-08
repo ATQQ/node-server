@@ -12,7 +12,7 @@ class Result {
     private code: number
     private data: Object
     private msg: string
-    constructor(code, errMsg, data?) {
+    constructor(code: number, errMsg: string, data?: Object) {
         this.code = code;
         this.data = data;
         this.msg = errMsg;
@@ -72,10 +72,13 @@ export default async function wrapperServer(req: SuperHttpRequest, res: SuperHtt
         res.end(JSON.stringify(data))
     }
 
-    res.success = function (data?, code = 0, msg = 'ok') {
-        res.json(new Result(code, msg, data))
+    res.success = function (data?) {
+        res.json(new Result(0, 'ok', data))
     }
 
+    res.fail = function (code: number, msg: string, data?: Object) {
+        res.json(new Result(code, msg, data))
+    }
     const { query } = url.parse(req.url)
     req.data = req.method === 'GET' ? qs.parse(query) : await getBodyContent(req)
 }
