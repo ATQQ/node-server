@@ -1,5 +1,5 @@
 // types
-import { SuperHttpRequest, SuperHttpResponse } from '@/types'
+import { SuperHttpRequest, SuperHttpResponse } from '@/lib/types'
 
 // other module
 import qs from 'query-string'

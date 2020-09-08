@@ -15,3 +15,11 @@ export interface SuperHttpResponse extends ServerResponse {
     success?: Function
     fail?: Function
 }
+
+export type callback = (req: SuperHttpRequest, res: SuperHttpResponse) => void
+
+export interface Route {
+    method: string
+    path: string
+    callback: callback
+}

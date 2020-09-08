@@ -1,6 +1,6 @@
-import { Route } from "@/lib/Router/types"
+import { Route } from "@/lib/types"
 import userRouter from './modules/user'
-import { SuperHttpRequest } from '@/types'
+import { SuperHttpRequest } from '@/lib/types'
 
 export const routes: Route[] = [userRouter].reduce((pre, cuur) => {
     return pre.concat(cuur.getRoute())

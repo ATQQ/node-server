@@ -23,17 +23,17 @@ yarn install
 
 4. 启动项目
 ```npm
-npm run dev
+npm run start
 ```
 ---
 
 ## 自定义实现
 * [x] router(路由)
-* [ ] localStorage(本地存储)
+* [x] localStorage(本地存储)
 * ...
 
 ## 数据库相关
-* [ ]mysql:完成基本配置与测试用例的编写
+* [x]mysql:完成基本配置与测试用例的编写
 * ...
 
 ## 目录简介

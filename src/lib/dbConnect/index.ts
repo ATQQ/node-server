@@ -1,16 +1,17 @@
-const mysql = require('mysql')
-const dbconfig = require('./../config/db.config')
+import mysql from 'mysql'
+import { dbConfig } from '@/config'
 
 // 创建连接池
-const pool = mysql.createPool(dbconfig)
+const pool = mysql.createPool(dbConfig)
 
+type param = string | number
 /**
  * 执行sql语句
- * @param {String} sql sql语句 
- * @param {...String} params 参数 
+ * @param sql sql语句 
+ * @param params 参数 
  */
-function query(sql, ...params) {
-    return new Promise((resolve, reject) => {
+export function query<T>(sql: string, ...params: param[]) {
+    return new Promise<T>((resolve, reject) => {
         pool.getConnection((err, coon) => {
             if (err) {
                 reject(err)
@@ -28,5 +29,3 @@ function query(sql, ...params) {
         })
     })
 }
-
-module.exports = { query }
