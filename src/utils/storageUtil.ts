@@ -1,10 +1,16 @@
+interface Value {
+    value: any
+    duration: number
+}
+
 /**
  * 自行构建的本地存储对象
  */
 class LocalStorage {
+    private map: Map<string, Value>
+
     constructor() {
         this.map = new Map()
-
         const fun = () => {
             setTimeout(() => {
                 this.expiredCheck()
@@ -16,35 +22,32 @@ class LocalStorage {
 
     /**
      * 设置键
-     * @param {any} key 键
-     * @param {any} value 值
-     * @param {Number} duration(s) 过期时间(默认-1不过期)
+     * @param key 键
+     * @param value 值
+     * @param duration(s) 过期时间(默认-1不过期)
      */
-    setItem(key, value, duration = -1) {
+    setItem(key: string, value: any, duration = -1) {
         this.map.set(key, { value, duration })
     }
 
     /**
      * 移除键
-     * @param {any} key 键
      */
-    removeItem(key) {
-        this.map.set(key, null)
+    removeItem(key: string) {
+        this.map.delete(key)
     }
 
     /**
      * 过期指定键
-     * @param {any} key 键
      */
-    expireItem(key) {
+    expireItem(key: string) {
         this.setItem(key, null, 0)
     }
 
     /**
      * 获取键值
-     * @param {any} key 键
      */
-    getItem(key) {
+    getItem(key: string) {
         return this.map.get(key)
     }
 
@@ -60,34 +63,29 @@ class LocalStorage {
      */
     expiredCheck() {
         let keys = this.map.keys()
-            // console.log('---开始扫描---');
         for (const key of keys) {
             let value = this.getItem(key)
-            if (value && value.duration && value.duration > 0) {
-                let { value: v, duration } = value;
-                this.setItem(key, v, --duration)
-            } else if (value && value.duration === 0) {
+            if (value.duration === 0) {
                 // 处理过期
                 console.log(`处理过期-------${key}`);
                 this.removeItem(key)
+            } else {
+                let { value: v, duration } = value;
+                this.setItem(key, v, --duration)
             }
-            // if (value) {
-            //     console.log(value.duration);
-            // }
-
-            // 负数不处理
         }
     }
 
+    static instance = null
     /**
      * 获取对象
      */
     static getInstance() {
-        if (!this.instance) {
-            this.instance = new LocalStorage()
+        if (!LocalStorage.instance) {
+            LocalStorage.instance = new LocalStorage()
         }
-        return this.instance
+        return LocalStorage.instance
     }
 }
 
-module.exports = LocalStorage.getInstance()
+export default LocalStorage.getInstance()
