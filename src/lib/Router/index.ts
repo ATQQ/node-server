@@ -18,7 +18,7 @@ class Router {
     }
 
     private controller(method) {
-        return <T1, T2>(path: string, callback: callback<T1, T2>) => {
+        return <Data = any, Params = any>(path: string, callback: callback<Data, Params>) => {
             this.register(method, nodePath.join(this.prefix, path), callback)
         }
     }

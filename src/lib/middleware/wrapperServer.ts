@@ -1,5 +1,6 @@
 // types
 import { SuperHttpRequest, SuperHttpResponse } from '@/lib/types'
+import { ServerOptions } from 'http'
 
 // other module
 import qs from 'query-string'
@@ -59,26 +60,28 @@ function getBodyContent(req: SuperHttpRequest) {
 }
 
 export default async function wrapperServer(req: SuperHttpRequest, res: SuperHttpResponse) {
-
     res.setHeader('Content-Type', 'application/json;charset=utf-8')
+    const { query } = url.parse(req.url)
+    req.data = req.method === 'GET' ? qs.parse(query) : await getBodyContent(req)
+}
 
+export function expandHttpServerMethod(http: ServerOptions): void {
+    const res: SuperHttpResponse = http.ServerResponse.prototype
     res.notFound = function () {
-        res.statusCode = 404
-        res.setHeader('Content-Type', 'text/html;charset=utf-8')
-        res.end('<h1>url not found</h1>')
+        this.statusCode = 404
+        this.setHeader('Content-Type', 'text/html;charset=utf-8')
+        this.end('<h1>url not found</h1>')
     }
 
     res.json = function (data) {
-        res.end(JSON.stringify(data))
+        this.end(JSON.stringify(data))
     }
 
     res.success = function (data?) {
-        res.json(new Result(0, 'ok', data))
+        this.json(new Result(0, 'ok', data))
     }
 
     res.fail = function (code: number, msg: string, data?: Object) {
-        res.json(new Result(code, msg, data))
+        this.json(new Result(code, msg, data))
     }
-    const { query } = url.parse(req.url)
-    req.data = req.method === 'GET' ? qs.parse(query) : await getBodyContent(req)
 }

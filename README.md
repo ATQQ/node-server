@@ -3,7 +3,7 @@
 ## 简介
 适用于中小型web应用,demo演示等等的服务端开发脚手架
 
-基于node实现,不依赖第三方Web服务端框架
+基于node+ts实现,不依赖第三方Web服务端框架
 
 ## 快速食用
 1. 克隆仓库到本地
@@ -29,11 +29,13 @@ npm run start
 
 ## 自定义实现
 * [x] router(路由)
-* [x] localStorage(本地存储)
+* [ ] localStorage(本地存储)
+* [ ] tokenUtil
+* [ ] 配置化接入redis
 * ...
 
 ## 数据库相关
-* [x]mysql:完成基本配置与测试用例的编写
+* [x] mysql:完成基本配置与测试用例的编写
 * ...
 
 ## 目录简介

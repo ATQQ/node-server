@@ -10,11 +10,10 @@ interface LoginData {
     password: string
 }
 
-userRouter.post<LoginData, any>('login', async (req, res) => {
+userRouter.post<LoginData>('login', async (req, res) => {
     console.log(req.data);
     const { username, password } = req.data
     const user = await selectUserByUsername(username)
-
     res.success(user[0])
 })
 
