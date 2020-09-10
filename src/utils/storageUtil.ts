@@ -9,15 +9,16 @@ interface Value {
 class LocalStorage {
     private map: Map<string, Value>
 
+    private loop() {
+        setTimeout(() => {
+            this.expiredCheck()
+            if (this.map.size > 0) {
+                this.loop()
+            }
+        }, 1000)
+    }
     constructor() {
         this.map = new Map()
-        const fun = () => {
-            setTimeout(() => {
-                this.expiredCheck()
-                fun()
-            }, 1000)
-        }
-        fun()
     }
 
     /**
@@ -26,7 +27,10 @@ class LocalStorage {
      * @param value 值
      * @param duration(s) 过期时间(默认-1不过期)
      */
-    setItem(key: string, value: any, duration = -1) {
+    public setItem(key: string, value: any, duration = -1) {
+        if (this.map.size === 0) {
+            this.loop()
+        }
         this.map.set(key, { value, duration })
     }
 
@@ -76,7 +80,7 @@ class LocalStorage {
         }
     }
 
-    static instance = null
+    static instance: LocalStorage = null
     /**
      * 获取对象
      */
