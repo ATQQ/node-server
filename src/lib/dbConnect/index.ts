@@ -1,5 +1,6 @@
 import mysql from 'mysql'
 import { dbConfig } from './../../config'
+import { globalResponseError } from '../middleware/wrapperServer'
 
 // 创建连接池
 const pool = mysql.createPool(dbConfig)
@@ -11,6 +12,7 @@ function refreshConnection() {
         if (err) {
             console.error('------ db connection error -------');
             console.error(err);
+            globalResponseError(err)
             console.log('ready reConnect');
             return;
         }
@@ -46,6 +48,7 @@ export function query<T>(sql: string, ...params: param[]) {
     return new Promise<T>((resolve, reject) => {
         connection.query(sql, params, (err, result, fields) => {
             if (err) {
+                globalResponseError(err)
                 reject(err)
                 return;
             }

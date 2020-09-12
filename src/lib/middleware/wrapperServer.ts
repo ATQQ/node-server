@@ -85,3 +85,9 @@ export function expandHttpServerMethod(http: ServerOptions): void {
         this.json(new Result(code, msg, data))
     }
 }
+
+export function globalResponseError(errData: object = {}) {
+    const res: SuperHttpResponse = global['res']
+    errData = errData instanceof Object ? errData : {}
+    res.fail(500, 'server error', errData)
+}
