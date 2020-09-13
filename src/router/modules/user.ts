@@ -1,7 +1,7 @@
-import Router from '../../lib/Router'
+import Router from '@/lib/Router'
 
 // db
-import { selectUserByUsername } from './../../db/userDb'
+import { selectUserByUsername } from '@/db/userDb'
 
 const userRouter = new Router('user')
 
@@ -11,20 +11,20 @@ interface LoginData {
 }
 
 userRouter.post<LoginData>('login', async (req, res) => {
-    console.log(req.data);
-    const { username, password } = req.data
+    console.log(req.data)
+    const { username } = req.data
     const user = await selectUserByUsername(username)
     res.success(user[0])
 })
 
 userRouter.get('getCode', async (req, res) => {
-    console.log(req.data);
+    console.log(req.data)
     res.success()
 })
 
 userRouter.post('info/:userId', async (req, res) => {
-    console.log(req.params);
-    console.log(req.data);
+    console.log(req.params)
+    console.log(req.data)
     res.success()
 })
 

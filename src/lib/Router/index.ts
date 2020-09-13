@@ -28,7 +28,7 @@ class Router {
     public put = this.controller('put')
     public del = this.controller('del')
 
-    public getRoute() {
+    public getRoute(): Route[] {
         return this.routes
     }
 

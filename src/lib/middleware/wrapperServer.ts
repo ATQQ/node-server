@@ -11,12 +11,12 @@ import url from 'url'
  */
 class Result {
     private code: number
-    private data: Object
+    private data: unknown
     private msg: string
-    constructor(code: number, errMsg: string, data?: Object) {
-        this.code = code;
-        this.data = data;
-        this.msg = errMsg;
+    constructor(code: number, errMsg: string, data?: unknown) {
+        this.code = code
+        this.data = data
+        this.msg = errMsg
     }
 }
 
@@ -49,8 +49,10 @@ function getBodyContent(req: SuperHttpRequest) {
                 }
 
             } catch (error) {
-                console.log(buffer.toString());
-                console.error(error);
+                console.log(buffer.toString())
+                console.error(error)
+                globalResponseError(error)
+                reject(error)
                 data = {}
             } finally {
                 resolve(data)
@@ -59,7 +61,7 @@ function getBodyContent(req: SuperHttpRequest) {
     })
 }
 
-export default async function wrapperServer(req: SuperHttpRequest, res: SuperHttpResponse) {
+export default async function wrapperServer(req: SuperHttpRequest, res: SuperHttpResponse):Promise<void> {
     res.setHeader('Content-Type', 'application/json;charset=utf-8')
     const { query } = url.parse(req.url)
     req.data = req.method === 'GET' ? qs.parse(query) : await getBodyContent(req)
@@ -81,12 +83,12 @@ export function expandHttpServerMethod(http: ServerOptions): void {
         this.json(new Result(0, 'ok', data))
     }
 
-    res.fail = function (code: number, msg: string, data?: Object) {
+    res.fail = function (code: number, msg: string, data?: unknown) {
         this.json(new Result(code, msg, data))
     }
 }
 
-export function globalResponseError(errData: object = {}) {
+export function globalResponseError(errData: unknown): void {
     const res: SuperHttpResponse = global['res']
     errData = errData instanceof Object ? errData : {}
     res.fail(500, 'server error', errData)

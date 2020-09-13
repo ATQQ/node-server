@@ -1,3 +1,6 @@
+// 编译后的绝对路径映射插件
+import 'module-alias/register'
+
 // types
 import { SuperHttpRequest, SuperHttpResponse } from '@/lib/types'
 
@@ -8,11 +11,12 @@ import http from 'http'
 import { serverConfig } from './config'
 
 // middleware 中间件
-import matchRequest from './lib/middleware/matchRequest'
-import wrapperServer from './lib/middleware/wrapperServer'
-import { expandHttpServerMethod } from './lib/middleware/wrapperServer'
-import logReq from './lib/middleware/logReq'
+import matchRequest from '@middleware/matchRequest'
+import wrapperServer from '@middleware/wrapperServer'
+import { expandHttpServerMethod } from '@middleware/wrapperServer'
+import logReq from '@middleware/logReq'
 
+// 在原型上(prototype)对request与response进行拓展
 expandHttpServerMethod(http)
 
 const server = http.createServer(async (req: SuperHttpRequest, res: SuperHttpResponse) => {
@@ -26,5 +30,5 @@ const server = http.createServer(async (req: SuperHttpRequest, res: SuperHttpRes
 })
 
 server.listen(serverConfig.port, serverConfig.hostname, () => {
-    console.log(`server run success http://${serverConfig.hostname}:${serverConfig.port}`);
+    console.log(`server run success http://${serverConfig.hostname}:${serverConfig.port}`)
 })

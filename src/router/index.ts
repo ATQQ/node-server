@@ -1,18 +1,21 @@
-import { Route } from "@/lib/types"
+import { Route, SuperHttpRequest, Params } from '@/lib/types'
 import userRouter from './modules/user'
-import { SuperHttpRequest } from '@/lib/types'
+import nodeUrl from 'url'
 
 export const routes: Route[] = [userRouter].reduce((pre, cuur) => {
     return pre.concat(cuur.getRoute())
 }, [])
-
-export function matchReqPath(path: string, reqPath: string) {
+interface ReqPathParams {
+    params: Params,
+    ok: boolean
+}
+export function matchReqPath(path: string, reqPath: string): ReqPathParams {
     const rParams = /\/:(\w+)/g
     // url参数组
-    let paramsArr: string[] = []
+    const paramsArr: string[] = []
     path = path.replace(rParams, function (all, p1) {
         paramsArr.push(p1)
-        return `/(\\w+)`
+        return '/(\\w+)'
     })
     let params = {}
     let ok = false
@@ -20,12 +23,12 @@ export function matchReqPath(path: string, reqPath: string) {
     const r = new RegExp(`^\/${path}$`, 'ig')
 
     if (r.test(reqPath)) {
-        reqPath.replace(r, function (all) {
+        reqPath.replace(r, function (...rest) {
             params = paramsArr.reduce((pre, cuur, cuurIndex) => {
-                pre[cuur] = arguments[cuurIndex + 1]
+                pre[cuur] = rest[cuurIndex + 1]
                 return pre
             }, {})
-            return all
+            return rest[0]
         })
         ok = true
     }
@@ -35,7 +38,7 @@ export function matchReqPath(path: string, reqPath: string) {
     }
 }
 
-export function matchRouter(req: SuperHttpRequest) {
+export function matchRouter(req: SuperHttpRequest): Route {
     const { method: reqMethod, url: reqPath } = req
     const route = routes.find(route => {
         const { path, method } = route
@@ -44,7 +47,7 @@ export function matchRouter(req: SuperHttpRequest) {
             return false
         }
 
-        const { params, ok } = matchReqPath(path, reqPath)
+        const { params, ok } = matchReqPath(path, nodeUrl.parse(reqPath).pathname)
         if (ok) {
             req.params = params
         }

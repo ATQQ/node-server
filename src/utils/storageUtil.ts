@@ -66,16 +66,16 @@ class LocalStorage {
      * 过期检测
      */
     expiredCheck() {
-        let keys = this.map.keys()
+        const keys = this.map.keys()
         for (const key of keys) {
-            let value = this.getItem(key)
+            const value = this.getItem(key)
             if (value.duration === 0) {
                 // 处理过期
-                console.log(`处理过期-------${key}`);
+                console.log(`处理过期-------${key}`)
                 this.removeItem(key)
             } else {
-                let { value: v, duration } = value;
-                this.setItem(key, v, --duration)
+                const { value: v, duration } = value
+                this.setItem(key, v, duration - 1)
             }
         }
     }

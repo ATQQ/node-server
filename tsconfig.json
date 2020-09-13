@@ -11,6 +11,9 @@
       "@/*": [
         "src/*"
       ],
+      "@middleware/*": [
+        "src/lib/middleware/*"
+      ]
     }
   }
 }

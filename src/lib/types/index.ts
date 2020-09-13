@@ -1,7 +1,6 @@
 import { IncomingMessage, ServerResponse } from 'http'
-import { type } from 'os'
 
-interface Params {
+export interface Params {
     [key: string]: string
 }
 
@@ -10,10 +9,10 @@ export interface SuperHttpRequest<T1 = any, T2 = Params> extends IncomingMessage
     params?: T2
 }
 
-type reqJson = (data: Object) => void
+type reqJson = (data: unknown) => void
 type reqNotFound = () => void
-type reqSuccess = (data?: Object) => void
-type reqFail = (code: number, msg: string, data?: Object) => void
+type reqSuccess = (data?: unknown) => void
+type reqFail = (code: number, msg: string, data?: unknown) => void
 export interface SuperHttpResponse extends ServerResponse {
     json?: reqJson
     notFound?: reqNotFound

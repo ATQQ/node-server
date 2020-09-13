@@ -1,0 +1,33 @@
+{
+    "parser": "@typescript-eslint/parser",
+    "env": {
+        "node": true
+    },
+    "extends": [
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "plugins": [
+        "@typescript-eslint",
+        "todo-ddl"
+    ],
+    "rules": {
+        "@typescript-eslint/no-explicit-any": [
+            "off"
+        ],
+        "todo-ddl/diy": [
+            "warn"
+        ],
+        "indent": [
+            "warn",
+            4
+        ],
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "semi": [
+            "warn",
+            "never"
+        ]
+    }
+}
