@@ -48,7 +48,7 @@ yarn dev
 ## 数据库相关
 * [x] mysql:完成基本配置与测试用例的编写
 * [ ] redis
-* [ ] mongodb
+* [x] mongodb
 * ...
 
 ## 目录简介

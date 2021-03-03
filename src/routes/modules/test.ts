@@ -1,10 +1,12 @@
 import { UserPower } from '@/db/modal'
+import { findUserData } from '@/db/testDb'
 import Router from '@/lib/Router'
 
 const router = new Router('test')
 
 router.get('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
+    findUserData()
     res.success()
 })
 

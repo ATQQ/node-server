@@ -1,7 +1,7 @@
 import mysql from 'mysql'
-import { dbConfig } from '@/config'
+import { mysqlConfig } from '@/config'
 // 创建连接池
-const pool = mysql.createPool(dbConfig)
+const pool = mysql.createPool(mysqlConfig)
 
 export function getConnection(): Promise<mysql.PoolConnection> {
     return new Promise((res, rej) => {
