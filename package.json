@@ -1,21 +1,24 @@
 {
     "name": "node-server",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
-    "main": "index.js",
+    "main": "src/server.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "tsnd -P ./tsconfig.json --respawn ./src/server.ts",
-        "lint": "eslint --fix ./src"
+        "dev": "tsnd -P ./tsconfig.json --respawn ./src/server.ts",
+        "start": "ts-node -P ./tsconfig.json  ./src/server.ts",
+        "lint": "eslint --fix ./src",
+        "test": "ts-node -P ./tsconfig.json ./tests/index.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "dotenv": "^8.2.0",
         "module-alias": "^2.2.2",
         "mysql": "^2.18.1",
-        "nodemon": "^2.0.4",
-        "query-string": "^6.13.1"
+        "qiniu": "^7.3.2",
+        "query-string": "^6.13.1",
+        "ts-node": "^9.1.1"
     },
     "devDependencies": {
         "@types/mysql": "^2.15.15",

@@ -2,7 +2,7 @@ const { random, round } = Math
 
 /**
  * 随机生成一个指定长度的数字串
- * @param {Number} length 
+ * @param length 
  */
 export function randomNumStr(length: number): string {
     let str = '',

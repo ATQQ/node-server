@@ -1,4 +1,4 @@
-import { encryption } from './md5'
+import { encryption } from './stringUtil'
 import storage from './storageUtil'
 import { User } from '@/db/modal'
 /**
@@ -10,8 +10,8 @@ class TokenUtil {
      * 生成token
      */
     createToken(user: User, timeout = 60 * 60 * 24) {
-        const { account } = user
-        const token = encryption([account, Date.now()].join())
+        const { username } = user
+        const token = encryption([username, Date.now()].join())
         storage.setItem(token, {
             user,
             updateDate: Date.now()
@@ -24,7 +24,7 @@ class TokenUtil {
     }
 
     getUserInfo(token: string) {
-        return storage.getItem(token).value.user
+        return storage.getItem(token)?.value?.user
     }
 
     static instance: TokenUtil = null

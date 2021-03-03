@@ -27,7 +27,7 @@ class LocalStorage {
      * @param value 值
      * @param duration(s) 过期时间(默认-1不过期)
      */
-    public setItem(key: string, value: any, duration = -1) {
+    public setItem(key: string, value: unknown, duration = -1) {
         if (this.map.size === 0) {
             this.loop()
         }

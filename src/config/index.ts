@@ -1,5 +1,5 @@
 export const serverConfig = {
-    port: 3000,
+    port: +process.env.PORT,
     hostname: 'localhost'
 }
 
@@ -8,10 +8,19 @@ export const serverConfig = {
 //     config = proConfig
 // }
 
+// 开发环境的测试数据库
 export const dbConfig = {
-    host: 'sugarat.top',
-    port: 3306,
-    user: 'auto_course',
-    password: 'a123456',
-    database: 'auto_course'
+    host: process.env.MYSQL_DB_HOST,
+    port: +process.env.MYSQL_DB_PORT,
+    database: process.env.MYSQL_DB_NAME,
+    user: process.env.MYSQL_DB_USER,
+    password: process.env.MYSQL_DB_PWD
+}
+
+// 通过环境变量注入
+const { QINIU_ACCESS_KEY, QINIU_SECRET_KEY } = process.env
+
+export const qiniuConfig = {
+    accessKey: QINIU_ACCESS_KEY,
+    secretKey: QINIU_SECRET_KEY
 }

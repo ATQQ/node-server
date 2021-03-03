@@ -17,10 +17,6 @@
         "todo-ddl/diy": [
             "warn"
         ],
-        "indent": [
-            "warn",
-            4
-        ],
         "quotes": [
             "warn",
             "single"

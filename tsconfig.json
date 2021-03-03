@@ -6,7 +6,13 @@
     "downlevelIteration": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
     "baseUrl": ".",
+    "outDir": "./dist/",
+    "typeRoots": [
+      "./node_modules/@types/"
+    ],
     "paths": {
       "@/*": [
         "src/*"
@@ -15,5 +21,11 @@
         "src/lib/middleware/*"
       ]
     }
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
