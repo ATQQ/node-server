@@ -1,5 +1,5 @@
 import { UserPower } from '@/db/modal'
-import { findUserData } from '@/db/testDb'
+import { findUserData, setRedisKey } from '@/db/testDb'
 import Router from '@/lib/Router'
 
 const router = new Router('test')
@@ -13,6 +13,7 @@ router.get('path1/path2', (req, res) => {
 router.post('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
     console.log(`body参数: ${JSON.stringify(req.data)}`)
+    setRedisKey()
     res.success()
 }, { power: UserPower.admin })
 
