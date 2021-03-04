@@ -43,11 +43,14 @@ yarn dev
 * [x] 拦截器
   * [x] 全局拦截
   * [x] 路由拦截
-* ...
+* [ ] 数据库方法包装
+  * [ ] mysql
+  * [ ] redis
+  * [ ] mongodb
 
 ## 数据库相关
 * [x] mysql:完成基本配置与测试用例的编写
-* [ ] redis
+* [x] redis
 * [x] mongodb
 * ...
 
