@@ -45,7 +45,7 @@ yarn dev
   * [x] 路由拦截
 * [x] 单元测试 - jest
 * [ ] 数据库方法包装
-  * [ ] mysql
+  * [x] mysql
   * [ ] redis
   * [x] mongodb
 
