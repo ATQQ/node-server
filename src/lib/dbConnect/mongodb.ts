@@ -26,3 +26,19 @@ export function getDBConnection(): Promise<Res> {
     })
 }
 
+type Callback<T> = (db: Db, resolve: (value: T | PromiseLike<T>) => void) => void
+
+export function query<T>(callback: Callback<T>): Promise<T> {
+    const p = new Promise<T>((resolve, rej) => {
+        getDBConnection().then(({ db, Db }) => {
+            // 执行回调
+            callback(Db, resolve)
+            // resolve后关闭
+            p.catch((e) => rej(e))
+                .finally(() => {
+                    db.close()
+                })
+        })
+    })
+    return p
+}

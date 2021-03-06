@@ -6,8 +6,10 @@ const router = new Router('test')
 
 router.get('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
-    findUserData()
-    res.success()
+    findUserData().then(data => {
+        console.log(data)
+        res.success()
+    })
 })
 
 router.post('path1/path2', (req, res) => {

@@ -1,11 +1,10 @@
-import { getDBConnection } from '@/lib/dbConnect/mongodb'
+import { query } from '@/lib/dbConnect/mongodb'
 import { getClient } from '@/lib/dbConnect/redis'
 
-export function findUserData(): void {
-    getDBConnection().then(({ db, Db }) => {
-        Db.collection('user').find().toArray().then(data => {
-            console.log(data)
-            db.close()
+export function findUserData() {
+    return query((db, resolve) => {
+        db.collection('user').find().toArray().then(data => {
+            resolve(data)
         })
     })
 }
