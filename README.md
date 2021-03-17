@@ -44,9 +44,9 @@ yarn dev
   * [x] 全局拦截
   * [x] 路由拦截
 * [x] 单元测试 - jest
-* [ ] 数据库方法包装
+* [x] 数据库方法包装
   * [x] mysql
-  * [ ] redis
+  * [x] redis
   * [x] mongodb
 
 ## 数据库相关

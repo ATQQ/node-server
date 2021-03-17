@@ -57,3 +57,9 @@ export interface User {
      */
     mobile?: string
 }
+
+export interface TestModal {
+    _id?: unknown
+    username?: string
+    pwd?: string
+}

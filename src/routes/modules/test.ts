@@ -1,14 +1,15 @@
-import { UserPower } from '@/db/modal'
-import { findUserData, setRedisKey } from '@/db/testDb'
+import { TestModal, UserPower } from '@/db/modal'
+import { findTestData, setRedisKey } from '@/db/testDb'
+import { insertCollection } from '@/lib/dbConnect/mongodb'
 import Router from '@/lib/Router'
 
 const router = new Router('test')
 
 router.get('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
-    findUserData().then(data => {
-        console.log(data)
-        res.success()
+    insertCollection<TestModal>('test', [{ username: 'xm', pwd: 'a123' }, { username: 'xm', pwd: 'a123' }], true).then(data => {
+        console.log(data.ops[0])
+        res.success(data.ops)
     })
 })
 
@@ -22,6 +23,9 @@ router.post('path1/path2', (req, res) => {
 router.delete('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
     console.log(`body参数: ${JSON.stringify(req.data)}`)
+    findTestData().then(data => {
+        console.log(data)
+    })
     res.fail(123, 'daada')
 }, { power: UserPower.superAdmin })
 

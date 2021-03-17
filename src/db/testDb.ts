@@ -1,12 +1,9 @@
-import { query } from '@/lib/dbConnect/mongodb'
+import { findCollection } from '@/lib/dbConnect/mongodb'
 import { getClient } from '@/lib/dbConnect/redis'
+import { TestModal } from './modal'
 
-export function findUserData() {
-    return query((db, resolve) => {
-        db.collection('user').find().toArray().then(data => {
-            resolve(data)
-        })
-    })
+export function findTestData(): Promise<TestModal[]> {
+    return findCollection<TestModal>('test', {})
 }
 
 export function setRedisKey(): void {
