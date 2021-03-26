@@ -36,7 +36,19 @@ router.put('path1/:path2', (req, res) => {
     res.success()
 })
 
-router.get('error', (req, res) => {
+router.get('error/async', async (req, res) => {
+    throw new Error('async error')
+    res.success()
+})
 
+router.get('error/reject', async (req, res) => {
+    await Promise.reject('reject error')
+    res.success()
+})
+
+router.get('error/sync', (req, res) => {
+    throw new Error('sync error')
+
+    res.success()
 })
 export default router

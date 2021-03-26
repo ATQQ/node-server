@@ -73,7 +73,9 @@ export function expandHttpRespPrototype(http: ServerOptions): void {
     }
 
     resp.json = function (data) {
-        this.end(JSON.stringify(data))
+        if (!resp.writableEnded) {
+            this.end(JSON.stringify(data))
+        }
     }
 
     resp.success = function (data?) {
@@ -100,7 +102,7 @@ export function matchRoute(routes: Route[], req: FWRequest, res: FWResponse): vo
 
 export function runRoute(req: FWRequest, res: FWResponse): void {
     const { callback } = req.route || {}
-    callback && callback(req, res)
+    return callback && callback(req, res)
 }
 
 export function defaultOperate(req: FWRequest, res: FWResponse): void {

@@ -55,6 +55,12 @@ yarn dev
 * [x] mongodb
 * ...
 
+## 错误处理
+* 运行时的错误
+  * [x] 同步
+  * [x] Promise rejection
+  * [x] async await
+
 ## 目录简介
 
 ```sh

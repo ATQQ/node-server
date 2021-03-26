@@ -24,7 +24,19 @@ export default class FW extends Router {
             if (res.writableEnded) {
                 return
             }
-            await middleware(req, res)
+            try {
+                const p: any = middleware(req, res)
+                if (p instanceof Promise) {
+                    p.catch(error => {
+                        res.fail(500, error.toString())
+                    })
+                    await p
+                }
+            } catch (error) {
+                if (!res.writableEnded) {
+                    res.fail(500, error.toString())
+                }
+            }
         }
     }
     public interceptor: Middleware
