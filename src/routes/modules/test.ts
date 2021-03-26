@@ -32,7 +32,11 @@ router.delete('path1/path2', (req, res) => {
 router.put('path1/:path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
     console.log(`body参数: ${JSON.stringify(req.data)}`)
-    console.log(`路由参数: ${JSON.stringify(req.pathValue)}`)
+    console.log(`路由参数: ${JSON.stringify(req.params)}`)
     res.success()
+})
+
+router.get('error', (req, res) => {
+
 })
 export default router

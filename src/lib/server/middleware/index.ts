@@ -6,7 +6,7 @@ import { ServerOptions } from 'http'
 export interface SuperRequest {
     query?: any
     data?: any
-    pathValue?: any
+    params?: any
     route?: Route
 }
 interface CodeMsg {
@@ -117,7 +117,7 @@ function _matchRoute(routes: Route[], req: FWRequest): Route {
 
         const { params, ok } = matchReqPath(path, nodeUrl.parse(reqPath).pathname)
         if (ok) {
-            req.pathValue = params
+            req.params = params
         }
         return ok
     })
