@@ -15,14 +15,14 @@ router.get('path1/path2', (req, res) => {
 
 router.post('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
-    console.log(`body参数: ${JSON.stringify(req.data)}`)
+    console.log(`body参数: ${JSON.stringify(req.body)}`)
     setRedisKey()
     res.success()
 }, { power: UserPower.admin })
 
 router.delete('path1/path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
-    console.log(`body参数: ${JSON.stringify(req.data)}`)
+    console.log(`body参数: ${JSON.stringify(req.body)}`)
     findTestData().then(data => {
         console.log(data)
     })
@@ -31,7 +31,7 @@ router.delete('path1/path2', (req, res) => {
 
 router.put('path1/:path2', (req, res) => {
     console.log(`url参数: ${JSON.stringify(req.query)}`)
-    console.log(`body参数: ${JSON.stringify(req.data)}`)
+    console.log(`body参数: ${JSON.stringify(req.body)}`)
     console.log(`路由参数: ${JSON.stringify(req.params)}`)
     res.success()
 })
