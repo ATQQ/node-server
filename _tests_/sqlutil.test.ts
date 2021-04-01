@@ -91,3 +91,9 @@ test('updateTableByModel("user",{name:"xm",age:18},{id:1})', () => {
     expect(sql).toBe('update user set name = ?,age = ? where id = ?')
     expect(params).toEqual(['xm', 18, 1])
 })
+
+test('updateTableByModel("user",{name:"xm",age:undefined},{id:1})', () => {
+    const { sql, params } = updateTableByModel('user', { name: 'xm', age: undefined }, { id: 1 })
+    expect(sql).toBe('update user set name = ? where id = ?')
+    expect(params).toEqual(['xm', 1])
+})
