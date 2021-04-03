@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: 'easypicker',
+        name: 'node-server',
         script: 'src/server.ts',
         interpreter: './node_modules/.bin/ts-node',
         watch: '.',
