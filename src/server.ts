@@ -52,3 +52,5 @@ app.listen(serverConfig.port, serverConfig.hostname, () => {
     console.log('-----', new Date().toLocaleString(), '-----')
     console.log('server start success', `http://${serverConfig.hostname}:${serverConfig.port}`)
 })
+
+module.exports = app

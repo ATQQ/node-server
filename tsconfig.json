@@ -7,9 +7,10 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "allowJs": true,
-    "experimentalDecorators": true,
     "baseUrl": ".",
-    "outDir": "./dist/",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "sourceMap": true,
     "typeRoots": [
       "./node_modules/@types/"
     ],
@@ -23,7 +24,7 @@
     }
   },
   "include": [
-    "src/**/*.ts",
+    "src/**/*",
   ],
   "exclude": [
     "node_modules"

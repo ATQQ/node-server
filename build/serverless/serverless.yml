@@ -1,0 +1,33 @@
+org: '1256505457'
+app: node-server-test
+stage: dev
+component: koa
+name: koa-EhFm5bWyQ
+inputs:
+  src:
+    src: ./
+    exclude:
+      # - .env
+      # - node_modules/**
+  region: ap-chengdu
+  runtime: Nodejs10.15
+  apigatewayConf:
+    protocols:
+      - http
+      - https
+    environment: release
+    serviceTimeout: 60
+    autoCreateDns: false
+  isAutoCiDeploy: false
+  functionConf:
+    eip: true
+    timeout: 3
+    memorySize: 128
+    environment:
+      variables:
+        PORT: '3000'
+        REDIS_DB_HOST: 127.0.0.1
+        REDIS_DB_PORT: '6379'
+  layers:
+    - name: '${output:${stage}:${app}:node-server-test-layer.name}'
+      version: '${output:${stage}:${app}:node-server-test-layer.version}'
