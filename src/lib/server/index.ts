@@ -64,12 +64,7 @@ export default class FW extends Router {
         }
         // 执行路由中的逻辑
         this.use(runRoute)
-        this._server = http.createServer(async (req: FWRequest, res: FWResponse) => {
-            // default config
-            // 拦截器
-            this.interceptor && await this.interceptor(req, res)
-            this._execMiddleware(req, res)
-        })
+        this._server = http.createServer(this.callback())
     }
 
     /**
@@ -87,5 +82,13 @@ export default class FW extends Router {
     public listen(port = PORT, hostname = HOSTNAME, callback?: () => void): void {
         console.log(this._routes)
         this._server.listen(port, hostname, callback)
+    }
+    public callback(){
+        return async (req: FWRequest, res: FWResponse) => {
+            // default config
+            // 拦截器
+            this.interceptor && await this.interceptor(req, res)
+            this._execMiddleware(req, res)
+        }
     }
 }
