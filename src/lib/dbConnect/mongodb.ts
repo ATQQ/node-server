@@ -1,7 +1,11 @@
-import { Db, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateWriteOpResult, WithId } from 'mongodb'
+import {
+    Db, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateWriteOpResult, WithId,
+} from 'mongodb'
 import { mongodbConfig } from '@/config'
 
-const { host, port, user, password, database } = mongodbConfig
+const {
+    host, port, user, password, database,
+} = mongodbConfig
 
 const url = `mongodb://${user}:${password}@${host}:${port}/${database}`
 
@@ -15,12 +19,12 @@ export function getDBConnection(): Promise<Res> {
         MongoClient.connect(url, {
             useUnifiedTopology: true,
             useNewUrlParser: true,
-        }).then(db => {
+        }).then((db) => {
             res({
                 db,
-                Db: db.db(database)
+                Db: db.db(database),
             })
-        }).catch(err => {
+        }).catch((err) => {
             rej(err)
         })
     })
@@ -43,7 +47,7 @@ export function query<T>(callback: Callback<T>): Promise<T> {
     return p
 }
 
-const mongoDbQuery = query
+export const mongoDbQuery = query
 export function updateCollection<T>(collection: string, query: FilterQuery<T>, data: T, many = false): Promise<UpdateWriteOpResult> {
     return mongoDbQuery<UpdateWriteOpResult>((db, resolve) => {
         if (many) {

@@ -17,8 +17,7 @@ export function getConnection(): Promise<mysql.PoolConnection> {
     })
 }
 
-
-pool.on('error', function (err) {
+pool.on('error', (err) => {
     console.log('pool connect error')
     console.error(err)
 })
@@ -26,8 +25,8 @@ pool.on('error', function (err) {
 type param = string | number
 /**
  * 执行sql语句
- * @param sql sql语句 
- * @param params 参数 
+ * @param sql sql语句
+ * @param params 参数
  */
 export function query<T>(sql: string, ...params: param[]): Promise<T> {
     return new Promise<T>((resolve, reject) => {
