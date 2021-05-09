@@ -17,6 +17,7 @@ class LocalStorage {
             }
         }, 1000)
     }
+
     constructor() {
         this.map = new Map()
     }
@@ -31,6 +32,7 @@ class LocalStorage {
         if (this.map.size === 0) {
             this.loop()
         }
+        // console.log('LocalStorage: set', key, value)
         this.map.set(key, { value, duration })
     }
 
@@ -52,11 +54,12 @@ class LocalStorage {
      * 获取键值
      */
     getItem(key: string) {
+        // console.log('LocalStorage: get', key)
         return this.map.get(key)
     }
 
     /**
-     * 清除所有键值 
+     * 清除所有键值
      */
     clearItem() {
         this.map.clear()
@@ -68,19 +71,19 @@ class LocalStorage {
     expiredCheck() {
         const keys = this.map.keys()
         for (const key of keys) {
-            const value = this.getItem(key)
+            const value = this.map.get(key)
             if (value.duration === 0) {
                 // 处理过期
                 console.log(`处理过期-------${key}`)
                 this.removeItem(key)
             } else {
-                const { value: v, duration } = value
-                this.setItem(key, v, duration - 1)
+                value.duration -= 1
             }
         }
     }
 
     static instance: LocalStorage = null
+
     /**
      * 获取对象
      */
