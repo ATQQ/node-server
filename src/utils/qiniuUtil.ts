@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { qiniuConfig } from '@/config'
 import qiniu from 'qiniu'
 import { getKeyInfo } from './stringUtil'
@@ -14,7 +15,7 @@ const { urlsafeBase64Encode } = qiniu.util
 /**
  * 获取OSS上文件的下载链接（默认12h有效）
  * @param key 文件的key
- * @param expiredTime 
+ * @param expiredTime
  */
 export function createDownloadUrl(key: string, expiredTime = getDeadline()): string {
     // 七牛云相关
@@ -52,20 +53,20 @@ export function deleteFiles(prefix: string): void {
 
 export function batchDeleteFiles(keys: string[]) {
     const config = new qiniu.conf.Config()
-    const delOptions = keys.map(k => qiniu.rs.deleteOp(bucket, k))
+    const delOptions = keys.map((k) => qiniu.rs.deleteOp(bucket, k))
     const bucketManager = new qiniu.rs.BucketManager(mac, config)
-    bucketManager.batch(delOptions, function (err, respBody, respInfo) {
+    bucketManager.batch(delOptions, (err, respBody, respInfo) => {
         if (err) {
             console.log(err)
-            //throw err;
+            // throw err;
         } else {
             // 200 is success, 298 is part success
-            if (parseInt(`${respInfo.statusCode / 100}`) == 2) {
-                respBody.forEach(function (item) {
-                    if (item.code == 200) {
-                        console.log(item.code + '\tsuccess')
+            if (parseInt(`${respInfo.statusCode / 100}`, 10) === 2) {
+                respBody.forEach((item) => {
+                    if ((+item.code) === 200) {
+                        console.log(`${item.code}\tsuccess`)
                     } else {
-                        console.log(item.code + '\t' + item.data.error)
+                        console.log(`${item.code}\t${item.data.error}`)
                     }
                 })
             } else {
@@ -79,7 +80,7 @@ export function batchDeleteFiles(keys: string[]) {
 export function deleteObjByKey(key: string): void {
     const config = new qiniu.conf.Config()
     const bucketManager = new qiniu.rs.BucketManager(mac, config)
-    bucketManager.delete(bucket, key, err => {
+    bucketManager.delete(bucket, key, (err) => {
         if (err) {
             console.log('------删除失败 start-------')
             console.log(key)
@@ -90,55 +91,59 @@ export function deleteObjByKey(key: string): void {
 }
 
 export function judgeFileIsExist(key: string): Promise<boolean> {
-    return new Promise(res => {
+    return new Promise((res) => {
         const config = new qiniu.conf.Config()
         const bucketManager = new qiniu.rs.BucketManager(mac, config)
         bucketManager.stat(bucket, key, (err, respBody, respInfo) => {
-            res(respInfo.statusCode !== 612)
+            if (respInfo && respInfo.statusCode) {
+                res(respInfo.statusCode !== 612)
+            } else {
+                res(false)
+            }
         })
     })
 }
 
 export function getFileCount(prefix: string): Promise<number> {
-    return new Promise(res => {
+    return new Promise((res) => {
         const config = new qiniu.conf.Config()
         const bucketManager = new qiniu.rs.BucketManager(mac, config)
         bucketManager.listPrefix(bucket, {
             limit: 10,
-            prefix
+            prefix,
         }, (err, respBody) => {
-            res(respBody?.items?.length || 0)
+            res(respBody.items.length || 0)
         })
     })
 }
 
 export function makeZipByPrefixWithKeys(prefix: string, zipName: string, keys: string[] = []): Promise<string> {
-    return new Promise(res => {
+    return new Promise((res) => {
         const config = new qiniu.conf.Config()
         const bucketManager = new qiniu.rs.BucketManager(mac, config)
 
         bucketManager.listPrefix(bucket, {
             // TODO:暂时这样写，后面改进
             limit: 1000,
-            prefix
+            prefix,
         }, (err, respBody) => {
             const files: any[] = respBody.items
             // 删除旧的压缩文件
-            deleteFiles(prefix.slice(0, -1) + '_package/')
+            deleteFiles(`${prefix.slice(0, -1)}_package/`)
             const names = []
             // 上传内容,过滤掉数据库中不存在的
-            const content = files.filter(file => keys.includes(file.key)).map(file => {
+            const content = files.filter((file) => keys.includes(file.key)).map((file) => {
                 // 拼接原始url
                 // 链接加密并进行Base64编码，别名去除前缀目录。
                 const keyInfo = getKeyInfo(file.key)
                 const { name, ext } = keyInfo
                 let { base } = keyInfo
-    
+
                 // 判断别名是否存在,存在则后缀+数字自增
                 let i = 1
                 while (names.includes(base)) {
                     base = `${name}_${i}${ext}`
-                    i++
+                    i += 1
                 }
                 names.push(base)
                 // 判断别名是否存在,存在则后缀+数字自增
@@ -150,15 +155,15 @@ export function makeZipByPrefixWithKeys(prefix: string, zipName: string, keys: s
             const putExtra = new qiniu.form_up.PutExtra()
             const key = `${Date.now()}-${~~(Math.random() * 1000)}.txt`
 
-            formUploader.put(getUploadToken(), key, content, putExtra, function (respErr,
-                respBody, respInfo) {
+            formUploader.put(getUploadToken(), key, content, putExtra, (respErr,
+                respBody, respInfo) => {
                 if (respErr) {
                     throw respErr
                 }
                 if (respInfo.statusCode == 200) {
                     const { key } = respBody
                     // 执行压缩
-                    const zipKey = urlsafeBase64Encode(bucket + ':' + prefix.substring(0, prefix.length - 1) + '_package/' + zipName + '.zip')
+                    const zipKey = urlsafeBase64Encode(`${bucket}:${prefix.substring(0, prefix.length - 1)}_package/${zipName}.zip`)
 
                     const fops = `mkzip/4/encoding/${urlsafeBase64Encode('gbk')}|saveas/${zipKey}`
                     const operManager = new qiniu.fop.OperationManager(mac, config)
@@ -190,9 +195,9 @@ export function makeZipByPrefixWithKeys(prefix: string, zipName: string, keys: s
 }
 
 export function makeZipWithKeys(keys: string[], zipName: string): Promise<string> {
-    return new Promise(res => {
+    return new Promise((res) => {
         const names = []
-        const content = keys.map(key => {
+        const content = keys.map((key) => {
             // 拼接原始url
             // 链接加密并进行Base64编码，别名去除前缀目录。
             const keyInfo = getKeyInfo(key)
@@ -203,7 +208,7 @@ export function makeZipWithKeys(keys: string[], zipName: string): Promise<string
             let i = 1
             while (names.includes(base)) {
                 base = `${name}_${i}${ext}`
-                i++
+                i += 1
             }
             names.push(base)
             const safeUrl = `/url/${urlsafeBase64Encode(createDownloadUrl(key))}/alias/${urlsafeBase64Encode(base)}`
@@ -214,15 +219,15 @@ export function makeZipWithKeys(keys: string[], zipName: string): Promise<string
         const putExtra = new qiniu.form_up.PutExtra()
         const key = `${Date.now()}-${~~(Math.random() * 1000)}.txt`
 
-        formUploader.put(getUploadToken(), key, content, putExtra, function (respErr,
-            respBody, respInfo) {
+        formUploader.put(getUploadToken(), key, content, putExtra, (respErr,
+            respBody, respInfo) => {
             if (respErr) {
                 throw respErr
             }
             if (respInfo.statusCode == 200) {
                 const { key } = respBody
                 // 执行压缩
-                const zipKey = urlsafeBase64Encode(bucket + ':' + 'easypicker2/' + `temp_package/${Date.now()}/` + zipName + '.zip')
+                const zipKey = urlsafeBase64Encode(`${bucket}:` + 'easypicker2/' + `temp_package/${Date.now()}/${zipName}.zip`)
 
                 const fops = `mkzip/4/encoding/${urlsafeBase64Encode('gbk')}|saveas/${zipKey}`
                 const operManager = new qiniu.fop.OperationManager(mac, config)
@@ -256,7 +261,7 @@ export function checkFopTaskStatus(persistentId: string): Promise<{ code: number
     const config = new qiniu.conf.Config()
     const operManager = new qiniu.fop.OperationManager(null, config)
     return new Promise((res) => {
-        operManager.prefop(persistentId, function (err, respBody, respInfo) {
+        operManager.prefop(persistentId, (err, respBody, respInfo) => {
             if (err) {
                 console.log(err)
                 throw err
@@ -285,13 +290,13 @@ interface FileStat {
  */
 export function batchFileStatus(keys: string[]): Promise<FileStat[]> {
     return new Promise((resolve, reject) => {
-        const statOperations = keys.map(k => qiniu.rs.statOp(bucket, k))
+        const statOperations = keys.map((k) => qiniu.rs.statOp(bucket, k))
         const config = new qiniu.conf.Config()
         const bucketManager = new qiniu.rs.BucketManager(mac, config)
-        bucketManager.batch(statOperations, function (err, respBody, respInfo) {
+        bucketManager.batch(statOperations, (err, respBody, respInfo) => {
             if (err) {
                 console.log(err)
-                //throw err;
+                // throw err;
             } else {
                 // 200 is success, 298 is part success
                 if (parseInt(`${respInfo.statusCode / 100}`) == 2) {
