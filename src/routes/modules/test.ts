@@ -52,7 +52,7 @@ router.get('error/sync', (req, res) => {
     res.success()
 })
 
-router.get('env/qiniu',(req,res)=>{
+router.get('env/qiniu', (req, res) => {
     res.success(process.env.QINIU_ACCESS_KEY)
-})
+}, { k1: '123' })
 export default router

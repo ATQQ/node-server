@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "ES6",
+    "lib": ["ESNext"],
     "module": "commonjs",
     "moduleResolution": "node",
     "downlevelIteration": true,
@@ -9,8 +10,6 @@
     "allowJs": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "sourceMap": true,
     "typeRoots": [
       "./node_modules/@types/"
     ],

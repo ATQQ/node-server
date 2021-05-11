@@ -1,11 +1,12 @@
 # node-server
 
+>服务已部署到腾讯云serverless上，访问地址: https://service-qf61ers9-1256505457.cd.apigw.tencentcs.com/release/
 ## 简介
-适用于中小型web应用,demo演示等等的服务端开发脚手架
+适用于中小型web应用,demo演示等等的服务端开发模板
 
-基于node+ts实现,不依赖第三方Web服务端框架
+基于node+ts实现,不依赖第三方Web服务端框架，支持build为js产物
 
-开箱即用
+开箱即用，自定义能力强，核心代码很少，diy的不二之选
 ## 快速食用
 1. 克隆仓库到本地
 ```sh
