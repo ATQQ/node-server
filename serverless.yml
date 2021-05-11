@@ -7,8 +7,14 @@ inputs:
   src:
     src: ./
     exclude:
-      # - .env
-      # - node_modules/**
+      - .env.local
+      - docs
+      - build
+      - _tests_
+      - .github
+      - src
+      - .eslintrc.json
+      - jest.config.ts
   region: ap-chengdu
   runtime: Nodejs10.15
   apigatewayConf:
@@ -21,13 +27,11 @@ inputs:
   isAutoCiDeploy: false
   functionConf:
     eip: true
-    timeout: 3
+    timeout: 10
     memorySize: 128
     environment:
       variables:
-        PORT: '3000'
-        REDIS_DB_HOST: 127.0.0.1
-        REDIS_DB_PORT: '6379'
+        NODE_ENV: test
   layers:
     - name: '${output:${stage}:${app}:node-server-test-layer.name}'
       version: '${output:${stage}:${app}:node-server-test-layer.version}'
