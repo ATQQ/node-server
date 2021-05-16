@@ -1,5 +1,5 @@
 import {
-    Db, DeleteWriteOpResultObject, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateWriteOpResult, WithId,
+    Db, DeleteWriteOpResultObject, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateQuery, UpdateWriteOpResult, WithId,
 } from 'mongodb'
 import { mongodbConfig } from '@/config'
 
@@ -48,7 +48,7 @@ export function query<T>(callback: Callback<T>): Promise<T> {
 }
 
 export const mongoDbQuery = query
-export function updateCollection<T>(collection: string, query: FilterQuery<T>, data: T, many = false): Promise<UpdateWriteOpResult> {
+export function updateCollection<T>(collection: string, query: FilterQuery<T>, data: UpdateQuery<T> | Partial<T>, many = false){
     return mongoDbQuery<UpdateWriteOpResult>((db, resolve) => {
         if (many) {
             db.collection<T>(collection).updateMany(query, data).then(resolve)
@@ -58,7 +58,7 @@ export function updateCollection<T>(collection: string, query: FilterQuery<T>, d
     })
 }
 
-export function insertCollection<T>(collection: string, data: T[] | T, many = false): Promise<InsertOneWriteOpResult<WithId<T>>> {
+export function insertCollection<T>(collection: string, data: T[] | T, many = false){
     return mongoDbQuery<InsertOneWriteOpResult<WithId<T>>>((db, resolve) => {
         if (many && Array.isArray(data)) {
             db.collection<T>(collection).insertMany(data as any).then(resolve as any)
@@ -67,7 +67,7 @@ export function insertCollection<T>(collection: string, data: T[] | T, many = fa
         db.collection<T>(collection).insertOne(data as any).then(resolve)
     })
 }
-export function findCollection<T>(collection: string, query: FilterQuery<T>): Promise<T[]> {
+export function findCollection<T>(collection: string, query: FilterQuery<T>) {
     return mongoDbQuery<T[]>((db, resolve) => {
         db.collection<T>(collection).find(query).toArray().then((data) => {
             resolve(data)
