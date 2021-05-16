@@ -1,5 +1,5 @@
 import {
-    Db, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateWriteOpResult, WithId,
+    Db, DeleteWriteOpResultObject, FilterQuery, InsertOneWriteOpResult, MongoClient, UpdateWriteOpResult, WithId,
 } from 'mongodb'
 import { mongodbConfig } from '@/config'
 
@@ -72,5 +72,15 @@ export function findCollection<T>(collection: string, query: FilterQuery<T>): Pr
         db.collection<T>(collection).find(query).toArray().then((data) => {
             resolve(data)
         })
+    })
+}
+
+export function deleteCollection<T>(collection: string, query: FilterQuery<T>, many = false) {
+    return mongoDbQuery<DeleteWriteOpResultObject>((db, resolve) => {
+        if (many) {
+            db.collection(collection).deleteMany(query).then(resolve)
+            return
+        }
+        db.collection(collection).deleteOne(query).then(resolve)
     })
 }
