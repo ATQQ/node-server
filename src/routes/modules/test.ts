@@ -1,7 +1,7 @@
 import { TestModal, UserPower } from '@/db/modal'
 import { findTestData, setRedisKey } from '@/db/testDb'
 import { insertCollection } from '@/lib/dbConnect/mongodb'
-import Router from '@/lib/Router'
+import Router from '@/lib/router'
 
 const router = new Router('test')
 

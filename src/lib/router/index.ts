@@ -1,5 +1,5 @@
 // types
-import { Callback, Method, Route, Controller } from './../server/types'
+import { Callback, Method, Route, Controller } from '../server/types'
 
 // node module
 import nodePath from 'path'

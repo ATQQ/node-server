@@ -7,7 +7,7 @@ import {
 } from './types'
 
 // router
-import Router from '../Router'
+import Router from '../router'
 
 // 自带中间件
 import {
