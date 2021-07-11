@@ -2036,6 +2036,11 @@ find-up@^4.0.0, find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+flash-wolves@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.npmjs.org/flash-wolves/-/flash-wolves-0.0.3.tgz#fc3513cef01f14e6ea1a55aec2b1850eba889c4d"
+  integrity sha512-rqkSfmvmp2cnQL0IQK1TXk4piiMmgXXNDu3wLBjPF1jQEvMzi7gplgYRuuua3oYoWW0aGw1A/lsQKIv2Hq+oXQ==
+
 flat-cache@^3.0.4:
   version "3.0.4"
   resolved "https://registry.npm.taobao.org/flat-cache/download/flat-cache-3.0.4.tgz?cache=0&sync_timestamp=1604831825098&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fflat-cache%2Fdownload%2Fflat-cache-3.0.4.tgz#61b0338302b2fe9f957dcc32fc2a87f1c3048b11"

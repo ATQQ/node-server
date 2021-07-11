@@ -19,6 +19,7 @@
     "core-js": "^3.12.1",
     "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
+    "flash-wolves": "^0.0.3",
     "module-alias": "^2.2.2",
     "mongodb": "^3.6.4",
     "mysql": "^2.18.1",

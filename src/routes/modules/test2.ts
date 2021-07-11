@@ -1,12 +1,11 @@
-import { Router, iRouter, GetRoute } from "../../lib/router/decorators";
+import { FwController, RouterController,GetMapping } from 'flash-wolves'
 
-@Router('test2')
-class Test2 extends iRouter {
-
-    @GetRoute('get/:id', { name: 'xm' })
+@RouterController('test2')
+class Test2 extends FwController {
+    @GetMapping('get/:id', { name: 'xm' })
     hello1(req, res) {
         const { body, query, params } = req
-        console.log(body, query, params);
+        console.log(body, query, params)
         res.success()
     }
 }

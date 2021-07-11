@@ -15,7 +15,7 @@ loadModuleAlias()
 import { serverConfig } from './config'
 
 // diy module 自建模块
-import FW from './lib/server'
+import { Fw } from 'flash-wolves'
 
 // routes
 import routes from './routes'
@@ -23,7 +23,7 @@ import routes from './routes'
 // interceptor
 import { serverInterceptor, routeInterceptor } from './middleware'
 
-const app = new FW(serverInterceptor, {
+const app = new Fw(serverInterceptor, {
     beforeRunRoute: routeInterceptor
 })
 
