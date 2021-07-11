@@ -6,6 +6,8 @@
 
 基于node+ts实现,不依赖第三方Web服务端框架，支持build为js产物
 
+使用了自定义的Web 框架[flash-wolves](https://github.com/ATQQ/flash-wolves)
+
 开箱即用，自定义能力强，核心代码很少，diy的不二之选
 ## 快速食用
 1. 克隆仓库到本地
@@ -37,7 +39,8 @@ yarn dev
 ```
 ---
 
-## 自定义实现
+## 包含的特性
+### 通用
 * [x] router(路由)
 * [x] localStorage(本地存储)
 * [x] tokenUtil
@@ -50,13 +53,13 @@ yarn dev
   * [x] redis
   * [x] mongodb
 
-## 数据库相关
+### 数据库相关
 * [x] mysql:完成基本配置与测试用例的编写
 * [x] redis
 * [x] mongodb
 * ...
 
-## 错误处理
+### 错误处理
 * 运行时的错误
   * [x] 同步
   * [x] Promise rejection
@@ -79,15 +82,6 @@ src
 ├── lib               # 自己封装的模块
 │   ├── dbConnect     # 链接数据库
 │   │   └── mysql.ts  # mysql
-│   ├── README.md     
-│   ├── Router        # 路由
-│   │   └── index.ts
-│   └── server        # 服务框架
-│       ├── index.ts
-│       ├── middleware
-│       │   └── index.ts
-│       └── types
-│           └── index.d.ts
 ├── middleware              # 中间件
 │   ├── index.ts
 │   ├── routeInterceptor.ts # 路由拦截

@@ -1,4 +1,4 @@
-import { Middleware } from '@/lib/server/types'
+import { Middleware } from 'flash-wolves'
 
 const interceptor: Middleware = async (req, res) => {
     const { options } = req.route

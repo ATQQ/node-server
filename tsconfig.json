@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",
+    "experimentalDecorators": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "target": "es5",
     "lib": ["ESNext"],
     "module": "commonjs",
     "moduleResolution": "node",
