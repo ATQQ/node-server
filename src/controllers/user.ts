@@ -4,8 +4,9 @@ import {
 
 @RouterController('user')
 export default class User {
-  @Post('login')
+  @Post('login', { key: 'value' })
   login(@ReqBody('username') username: string, @ReqBody('password') pwd: string) {
+    console.log(username, pwd)
     return {
       username,
       pwd,
