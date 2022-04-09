@@ -1,12 +1,9 @@
 # node-server
 
->服务已部署到腾讯云serverless上，访问地址: https://service-qf61ers9-1256505457.cd.apigw.tencentcs.com/release/
 ## 简介
 适用于中小型web应用,demo演示等等的服务端开发模板
 
-基于node+ts实现,不依赖第三方Web服务端框架，支持build为js产物
-
-使用了自定义的Web 框架[flash-wolves](https://github.com/ATQQ/flash-wolves)
+使用了自定义的Web 框架[flash-wolves](https://github.com/ATQQ/flash-wolves)，支持build为js产物
 
 开箱即用，自定义能力强，核心代码很少，diy的不二之选
 ## 快速食用
@@ -20,22 +17,24 @@ git clone https://github.com/ATQQ/node-server.git
 cd node-server
 ```
 
+包管理工具，推荐使用 [PNPM](https://pnpm.io/zh/) 
+
 3. 安装相关依赖
+
 ```sh
-yarn install
+pnpm install
 ```
 
-4. 启动项目
+1. 启动项目
 ```sh
-# -------prod--------
-npm run start
-# or
-yarn start
-
 # -------dev--------
-npm run dev
-# or
-yarn dev
+pnpm dev
+
+# -------prod--------
+# 先构建
+pnpm build
+# 再启动
+pnpm start
 ```
 ---
 
@@ -47,14 +46,15 @@ yarn dev
 * [x] 拦截器
   * [x] 全局拦截
   * [x] 路由拦截
-* [x] 单元测试 - jest
+  * [ ] and more
+* [x] 单元测试 - vitest
 * [x] 数据库方法包装
   * [x] mysql
   * [x] redis
   * [x] mongodb
 
 ### 数据库相关
-* [x] mysql:完成基本配置与测试用例的编写
+* [x] mysql
 * [x] redis
 * [x] mongodb
 * ...
@@ -82,20 +82,17 @@ src
 ├── lib               # 自己封装的模块
 │   ├── dbConnect     # 链接数据库
 │   │   └── mysql.ts  # mysql
+│   │   └── redis.ts  # redis
+│   │   └── mongodb.ts  # mongodb
+│   │ 
 ├── middleware              # 中间件
 │   ├── index.ts
 │   ├── routeInterceptor.ts # 路由拦截
 │   └── serverInterceptor.ts  # 全局拦截
-├── routes              # 路由
+├── controllers              # 路由
 │   ├── index.ts          # 对外统一暴露
-│   └── modules 
-│       └── test.ts     # 各个子模块
-├── server.ts           # 入口启动文件
-└── utils               # 工具方法
-    ├── qiniuUtil.ts
-    ├── randUtil.ts
-    ├── regExp.ts
-    ├── storageUtil.ts
-    ├── stringUtil.ts
-    └── tokenUtil.ts
+│   └── user.ts     # User 相关路由
+│ 
+├── index.ts           # 入口启动文件
+└── utils               # 一些工具方法
 ```
