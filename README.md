@@ -1,6 +1,5 @@
 # node-server
 
->服务已部署到腾讯云serverless上，访问地址: https://service-qf61ers9-1256505457.cd.apigw.tencentcs.com/release/
 ## 简介
 适用于中小型web应用,demo演示等等的服务端开发模板
 
@@ -48,7 +47,7 @@ pnpm start
   * [x] 全局拦截
   * [x] 路由拦截
   * [ ] and more
-* [ ] 单元测试 - vitest
+* [x] 单元测试 - vitest
 * [x] 数据库方法包装
   * [x] mysql
   * [x] redis

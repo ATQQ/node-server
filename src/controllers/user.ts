@@ -5,10 +5,10 @@ import {
 @RouterController('user')
 export default class User {
   @Post('login', { key: 'value' })
-  login(@ReqBody('username') username: string, @ReqBody('password') pwd: string) {
-    console.log(username, pwd)
+  login(@ReqBody('username') name: string, @ReqBody('password') pwd: string) {
+    console.log(name, pwd)
     return {
-      username,
+      name,
       pwd,
     }
   }
@@ -24,6 +24,8 @@ export default class User {
     console.log('id', id)
     console.log('param', params)
     console.log('query', query)
-    return id
+    return {
+      id, query, params,
+    }
   }
 }
