@@ -1,3 +1,3 @@
-const app = require('./dist/server')
+const app = require('./dist/index')
 
 module.exports = app

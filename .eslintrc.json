@@ -1,10 +1,28 @@
 {
-    "parser": "@typescript-eslint/parser",
+    "root": true,
+    "overrides": [
+        {
+            "files": [
+                "*.js"
+            ]
+        },
+        {
+            "files": [
+                "*.ts"
+            ],
+            "parser": "@typescript-eslint/parser",
+            "parserOptions": {
+                "ecmaVersion": 12,
+                "sourceType": "module"
+            }
+        }
+    ],
     "env": {
-        "node": true
+        "node": true,
+        "es2021": true
     },
     "extends": [
-        "plugin:@typescript-eslint/recommended"
+        "airbnb-base"
     ],
     "plugins": [
         "@typescript-eslint",
@@ -14,7 +32,22 @@
         "@typescript-eslint/no-explicit-any": [
             "off"
         ],
-        "@typescript-eslint/explicit-module-boundary-types":"off",
+        "import/prefer-default-export": [
+            "off"
+        ],
+        "import/no-import-module-exports":"off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "no-unused-vars": "off",
+        "no-shadow": "off",
+        "no-restricted-syntax": "off",
+        "no-await-in-loop": "off",
+        "no-underscore-dangle": "off",
+        "no-param-reassign": "off",
+        "no-use-before-define": "off",
+        "no-proto": "off",
+        "class-methods-use-this": "off",
         "todo-ddl/diy": [
             "warn"
         ],
@@ -25,6 +58,7 @@
         "semi": [
             "warn",
             "never"
-        ]
+        ],
+        "no-console": "off"
     }
 }
