@@ -35,7 +35,7 @@ export interface User {
     /**
      * 用户名
      */
-    username: string
+    account: string
     /**
      * 密码
      */

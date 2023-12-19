@@ -13,9 +13,7 @@
     "allowJs": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "typeRoots": [
-      "./node_modules/@types/"
-    ],
+    "types": ["vitest/globals"],
     "paths": {
       "@/*": [
         "src/*"
